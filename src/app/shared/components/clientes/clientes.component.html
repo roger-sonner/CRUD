@@ -1,0 +1,50 @@
+<div id="data-grid">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="clientes"
+    keyExpr="id"
+    [showColumnLines]="true"
+    [showRowLines]="true"
+    [showBorders]="true"
+    [rowAlternationEnabled]="true"
+    noDataText="Sem dados para exibição."
+    [remoteOperations]="operacoesRemotas"
+    (onSaved)="onSaved($event)"
+  >
+    <dxo-paging [enabled]="false"></dxo-paging>
+    <dxo-editing
+      title="Clientes"
+      mode="popup"
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+      [confirmDelete]="true"
+      [texts]="mensagens"
+      [useIcons]="true"
+    >
+      <dxo-popup
+        title="Informações do cliente"
+        [showTitle]="true"
+        [width]="700"
+        [height]="525"
+      >
+      </dxo-popup>
+      <dxo-form>
+        <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
+          <dxi-item dataField="codigo" [editorOptions]="{ width: 100 }"></dxi-item>
+          <dxi-item dataField="nome" [editorOptions]="{ width: 600 }"></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+
+    <dxi-column dataField="codigo" caption="Código" [width]="100" alignment="center">
+      <dxi-validation-rule type="required" message="O código é obrigatório"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="nome" caption="Nome">
+      <dxi-validation-rule type="required" message="O nome é obrigatório"></dxi-validation-rule>
+      <dxi-validation-rule type="stringLength" [min]="3" message="O nome deve conter no mínimo 3 caracteres"></dxi-validation-rule>
+      <dxi-validation-rule type="stringLength" [max]="10" message="O nome deve conter no máximo 10 caracteres"></dxi-validation-rule>
+    </dxi-column>
+  </dx-data-grid>
+</div>
+

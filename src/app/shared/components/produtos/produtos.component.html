@@ -1,0 +1,49 @@
+<div id="data-grid-demo">
+  <!--    [remoteOperations]="operacoesRemotas"-->
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="produtos"
+    keyExpr="id"
+    [showColumnLines]="true"
+    [showRowLines]="true"
+    [showBorders]="true"
+    [rowAlternationEnabled]="true"
+    noDataText="Sem dados para exibição."
+    (onSaved)="onSaved($event)"
+  >
+    <dxo-paging [enabled]="true"></dxo-paging>
+    <!--      [texts]="mensagens"-->
+    <dxo-editing
+      title="Produtos"
+      mode="popup"
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+      [confirmDelete]="true"
+      [useIcons]="true"
+    >
+      <dxo-popup
+        title="Informações do produto"
+        [showTitle]="true"
+        [width]="900"
+        [height]="525"
+      >
+      </dxo-popup>
+      <dxo-form>
+        <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
+          <dxi-item dataField="codigo" [editorOptions]="{ width: 100 }"></dxi-item>
+          <dxi-item dataField="descricao" [editorOptions]="{ width: 700 }" ></dxi-item>
+          <dxi-item dataField="valorUnitario" [editorOptions]="{ width: 200 }" formatValues="currency"></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+
+    <dxi-column dataField="codigo" caption="Código" [width]="100" alignment="center"></dxi-column>
+    <dxi-column dataField="descricao" caption="Descrição" [width]="700"></dxi-column>
+    <dxi-column dataField="valorUnitario" caption="Valor Unitário" [width]="200" format="R$ #,###,##0.00" alignment="center"></dxi-column>
+  </dx-data-grid>
+</div>
+<!--[format]="{ type: 'currency', precision: 2 }"-->
+<!--format="$ #,##0.##"-->
+<!--format="$ #.##0,##"-->
+
