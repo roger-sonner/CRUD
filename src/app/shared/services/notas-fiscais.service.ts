@@ -11,6 +11,8 @@ const API = 'http://localhost:8080/notasFiscais';
 })
 export class NotasFiscaisService {
 
+  // dropdownbox - ver se pode ser usado para produtos e clientes
+  // https://github.com/DevExpress-Examples/Form---Declare-dropdownbox-in-a-form-item/tree/20.1.6%2B/Angular/src/app
   idNotaFiscalAtual: bigint | undefined;
 
   constructor(private http: HttpClient) { }

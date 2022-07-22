@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Cliente} from "../../../models/cliente";
 import {ClientesService} from "../../services/clientes.service";
-import {HttpClient} from "@angular/common/http";
 import {DxDataGridComponent, DxFormComponent} from "devextreme-angular";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-clientes',
@@ -38,16 +38,11 @@ export class ClientesComponent implements OnInit {
     summary: true
   }
 
-  constructor(
-    private clienteService: ClientesService,
-    private http: HttpClient) {
-  }
+  constructor(private clienteService: ClientesService) {}
 
   ngOnInit(): void {
-    this.clienteService.getClientes().subscribe({
-      next: listaClientes => {
-        this.clientes = listaClientes
-      },
+    this.clienteService.requestCliente('GET')?.subscribe({
+      next: value => this.clientes = value,
       error: err => console.log('ERRO: ', err),
       complete: () => {}
     });
@@ -55,41 +50,33 @@ export class ClientesComponent implements OnInit {
 
   onSaved($event: any) {
 
+    let result: Observable<Cliente[]> | undefined;
     if($event.changes.length !== 0) {
 
+      let data = $event.changes[0].data;
       switch ($event.changes[0].type) {
         case 'insert':
-          this.clienteService.postCliente($event.changes[0].data)
-            .subscribe({
-              next: () => console.log,
-              error: err => console.log('ERRO: ', err),
-              complete: () => console.log
-            })
+          result = this.clienteService.requestCliente('POST', data);
           break;
 
         case 'update':
-          let data = $event.changes[0].data;
-          this.clienteService.putCliente(data, data.id)
-            .subscribe({
-              next: () => console.log,
-              error: err => console.log(err),
-              complete: () => console.log
-            })
+          result = this.clienteService.requestCliente('PUT', data, data.id);
           break;
 
         case 'remove':
           let id = $event.changes[0].key;
-          this.clienteService.deleteCliente(id)
-            .subscribe({
-              next: () => console.log,
-              error: err => console.log(err),
-              complete: () => console.log
-            })
+          result = this.clienteService.requestCliente('DELETE', data, id);
           break;
 
+      }
+      if(result) {
+        result?.subscribe({
+          next: () => console.log,
+          error: err => console.log(err),
+          complete: () => console.log
+        })
       }
       this.dataGrid?.instance.refresh();
     }
   }
-
 }
