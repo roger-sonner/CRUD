@@ -4,6 +4,7 @@ import {ProdutosService} from "../../services/produtos.service";
 import {DxDataGridComponent} from "devextreme-angular";
 import {Observable} from "rxjs";
 
+
 @Component({
   selector: 'app-produtos',
   templateUrl: './produtos.component.html',
@@ -28,7 +29,6 @@ export class ProdutosComponent implements OnInit {
   }
 
   onSaved($event: any) {
-
     let result: Observable<Produto[]> | undefined;
     if($event.changes.length !== 0) {
       let data = $event.changes[0].data;
@@ -36,11 +36,9 @@ export class ProdutosComponent implements OnInit {
         case 'insert':
           result = this.produtoService.requestProduto('POST', $event.changes[0].data);
           break;
-
         case 'update':
           result = this.produtoService.requestProduto('PUT', data, data.id);
           break;
-
         case 'remove':
           let id = $event.changes[0].key;
           result = this.produtoService.requestProduto('DELETE', data , id);

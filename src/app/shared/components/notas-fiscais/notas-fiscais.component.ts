@@ -40,6 +40,7 @@ export class NotasFiscaisComponent implements OnInit {
     this.notasFiscaisService.getNotasFiscais().subscribe({
       next: value => {
         this.notasFiscais = value
+        console.log(value);
       },
       error: err => console.log(err),
       complete: () => console.log

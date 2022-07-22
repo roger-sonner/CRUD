@@ -22,7 +22,7 @@ import {NotasFiscaisService} from "./shared/services/notas-fiscais.service";
 import {DxDataGridModule, DxFormModule, DxValidatorModule} from "devextreme-angular";
 import {HttpClientModule} from "@angular/common/http";
 import { ItensNotaFiscalDetalheComponent } from './shared/components/notas-fiscais/detalhe/itens-nota-fiscal-detalhe/itens-nota-fiscal-detalhe.component';
-
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,3 +59,5 @@ import { ItensNotaFiscalDetalheComponent } from './shared/components/notas-fisca
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

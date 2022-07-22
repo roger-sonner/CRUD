@@ -27,18 +27,18 @@
     </dxo-popup>
     <dxo-form>
       <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
-        <dxi-item dataField="sequencial" [editorOptions]="{ width: 20 }"></dxi-item>
-        <dxi-item dataField="produto.descricao" [editorOptions]="{ width: 600 }"></dxi-item>
-        <dxi-item dataField="quantidade" [editorOptions]="{ width: 100 }"></dxi-item>
-        <dxi-item dataField="valorTotal" [editorOptions]="{ width: 100 }"></dxi-item>
+        <dxi-item dataField="itemNotaFiscal.sequencial" [editorOptions]="{ width: 20 }"></dxi-item>
+        <dxi-item dataField="itemNotaFiscal.produto.descricao" [editorOptions]="{ width: 600 }"></dxi-item>
+        <dxi-item dataField="itemNotaFiscal.quantidade" [editorOptions]="{ width: 100 }"></dxi-item>
+        <dxi-item dataField="itemNotaFiscal.valorTotal" [editorOptions]="{ width: 100 }"></dxi-item>
       </dxi-item>
     </dxo-form>
   </dxo-editing>
 
 
-  <dxi-column dataField="sequencial" dataType="number" caption="Seq." width="70"></dxi-column>
-  <dxi-column dataField="produto.descricao" dataType="string" caption="Descrição" width="600"></dxi-column>
-  <dxi-column dataField="quantidade" dataType="number" caption="Qtde" width="100"></dxi-column>
-  <dxi-column dataField="valorTotal" dataType="number" caption="Vr Total" width="200"></dxi-column>
+  <dxi-column dataField="itemNotaFiscal.sequencial" dataType="number" caption="Seq." width="70"></dxi-column>
+  <dxi-column dataField="itemNotaFiscal.produto.descricao" dataType="string" caption="Descrição" width="600"></dxi-column>
+  <dxi-column dataField="itemNotaFiscal.quantidade" dataType="number" caption="Qtde" width="100"></dxi-column>
+  <dxi-column dataField="itemNotaFiscal.valorTotal" dataType="number" caption="Vr Total" width="200"></dxi-column>
 
 </dx-data-grid>

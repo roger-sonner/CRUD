@@ -22,12 +22,12 @@ export class NotasFiscaisService {
       .get<NotaFiscal[]>(API)
       .pipe(take(1));
   }
-
-  getItensNotaFiscal(id: number): Observable<ItemNotaFiscal[]> {
-    return this.http
-      .get<ItemNotaFiscal[]>(`${API}/${id}`)
-      .pipe(take(1));
-  }
+  //
+  // getItensNotaFiscal(id: number): Observable<ItemNotaFiscal[]> {
+  //   return this.http
+  //     .get<ItemNotaFiscal[]>(`${API}/${id}`)
+  //     .pipe(take(1));
+  // }
 
   postNotaFiscal(notaFiscal: NotaFiscal): Observable<NotaFiscal[]>{
     return this.http

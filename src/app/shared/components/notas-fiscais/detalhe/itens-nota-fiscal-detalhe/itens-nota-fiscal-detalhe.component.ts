@@ -19,14 +19,14 @@ export class ItensNotaFiscalDetalheComponent implements AfterViewInit {
 
   ngAfterViewInit() {
 
-      this.notasFiscaisService.getItensNotaFiscal(2).subscribe({
-        next: value => {
-          this.itensNotaFiscal = value;
-          console.log(this.itensNotaFiscal)
-        },
-        error: err => console.log(err),
-        complete: () => console.log
-      });
+      // this.notasFiscaisService.getItensNotaFiscal(2).subscribe({
+      //   next: value => {
+      //     this.itensNotaFiscal = value;
+      //     console.log(this.itensNotaFiscal)
+      //   },
+      //   error: err => console.log(err),
+      //   complete: () => console.log
+      // });
 
     //   this.itensNotaFiscalDataSource = new DataSource({
     //   store: new ArrayStore<ItemNotaFiscal>({
