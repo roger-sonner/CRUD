@@ -9,10 +9,12 @@
   [rowAlternationEnabled]="true"
 >
   <dxo-paging [enabled]="true"></dxo-paging>
-  <dxi-column dataField="id"  ></dxi-column>
-  <dxi-column dataField="quantidade"  ></dxi-column>
-  <dxi-column dataField="sequencial"  ></dxi-column>
-  <dxi-column dataField="produto.descricao"  ></dxi-column>
+  <dxi-column alignment="center" dataField="sequencial" caption="Ordem"></dxi-column>
+  <dxi-column alignment="center" dataField="produto.codigo" caption="Código"></dxi-column>
+  <dxi-column dataField="produto.descricao" caption="Descrição do produto"></dxi-column>
+  <dxi-column format="##,##0.00" dataField="quantidade" caption="Qtde." ></dxi-column>
+  <dxi-column format="R$ #,###,##0.00" dataField="produto.valorUnitario" caption="Valor Unit." ></dxi-column>
+  <dxi-column format="R$ #,###,##0.00" dataField="valorTotal" caption="Valor Total" ></dxi-column>
 
 
 </dx-data-grid>
