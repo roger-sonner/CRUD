@@ -15,18 +15,25 @@ export class ItensNotaFiscalDetalheComponent implements AfterViewInit {
 
   itensNotaFiscal: ItemNotaFiscal[] = [];
 
-  constructor(private notasFiscaisService: NotasFiscaisService) { }
+
+  tasksDataSource: DataSource | undefined;
+  tasks: Task[] | undefined;
+
+  constructor(private notasFiscaisService: NotasFiscaisService) {
+  }
 
   ngAfterViewInit() {
-
-      // this.notasFiscaisService.getItensNotaFiscal(2).subscribe({
-      //   next: value => {
-      //     this.itensNotaFiscal = value;
-      //     console.log(this.itensNotaFiscal)
-      //   },
-      //   error: err => console.log(err),
-      //   complete: () => console.log
-      // });
+    // console.log('@Input() key', this.key);
+    // this.notasFiscaisService.getItensNotaFiscalId(this.key).subscribe({
+      this.notasFiscaisService.getItensNotasFiscais().subscribe({
+        next: value => {
+          this.itensNotaFiscal = value;
+          console.log(typeof this.itensNotaFiscal);
+          console.log('ItensNotaFiscalDetalheComponent => ', this.itensNotaFiscal)
+        },
+        error: err => console.log(err),
+        complete: () => console.log
+      });
 
     //   this.itensNotaFiscalDataSource = new DataSource({
     //   store: new ArrayStore<ItemNotaFiscal>({

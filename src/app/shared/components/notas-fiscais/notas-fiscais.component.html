@@ -11,6 +11,7 @@
   (onSaved)="onSaved($event)"
 >
   <dxo-paging [enabled]="true"></dxo-paging>
+
   <dxo-editing
     title="Notas Fiscais"
     mode="popup"
@@ -31,20 +32,20 @@
       <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
         <dxi-item dataField="numero" [editorOptions]="{ width: 100 }"></dxi-item>
         <dxi-item dataField="data" [editorOptions]="{ width: 150 }" format="dd/MM/yyyy" ></dxi-item>
-<!--        <dxi-item dataField="itemNotaFiscal[0].produto.descricao" [editorOptions]="{ width: 500 }"></dxi-item>-->
         <dxi-item dataField="cliente.nome" [editorOptions]="{ width: 500 }"></dxi-item>
       </dxi-item>
     </dxo-form>
   </dxo-editing>
+
   <dxi-column dataField="numero" [width]="100" alignment="center" caption="Número"></dxi-column>
   <dxi-column dataField="data" [width]="150" dataType="date" format="dd/MM/yyyy" alignment="center" caption="Emissão"></dxi-column>
 <!--  <dxi-column dataField="itemNotaFiscal[0].produto.descricao" caption="Cliente"></dxi-column>-->
   <dxi-column dataField="cliente.nome" caption="Cliente"></dxi-column>
-  <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
-  <div *dxTemplate="let itens of 'detail'">
+  <dxo-master-detail [enabled]="true" template="itensNf"></dxo-master-detail>
+  <div *dxTemplate="let itens of 'itensNf'">
     <div class="master-detail-caption">
-      {{captionDetalhe}} - {{itens.data.cliente.nome}}
+      {{captionDetalhe}} - {{itens.data.id}} - {{itens.data.data}} - {{itens.data.numero}} - {{itens.data.cliente.nome}}
     </div>
-    <itens-nota-fiscal-detalhe [key]="itens.id" ></itens-nota-fiscal-detalhe>
+    <itens-nota-fiscal-detalhe [key]="itens.data.id" ></itens-nota-fiscal-detalhe>
   </div>
 </dx-data-grid>

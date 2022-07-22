@@ -6,6 +6,7 @@ import {ItemNotaFiscal} from "../../models/item-nota-fiscal";
 
 const API = 'http://localhost:8080/notasFiscais';
 
+const API_ITENS = 'http://localhost:8080/itensNotaFiscal';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,12 +23,18 @@ export class NotasFiscaisService {
       .get<NotaFiscal[]>(API)
       .pipe(take(1));
   }
-  //
-  // getItensNotaFiscal(id: number): Observable<ItemNotaFiscal[]> {
-  //   return this.http
-  //     .get<ItemNotaFiscal[]>(`${API}/${id}`)
-  //     .pipe(take(1));
-  // }
+
+  getItensNotaFiscalId(id: number | undefined): Observable<ItemNotaFiscal[]> {
+    return this.http
+      .get<ItemNotaFiscal[]>(`${API}/${id}`)
+      .pipe(take(1));
+  }
+
+  getItensNotasFiscais(): Observable<ItemNotaFiscal[]> {
+    return this.http
+      .get<ItemNotaFiscal[]>(API_ITENS)
+      .pipe(take(1));
+  }
 
   postNotaFiscal(notaFiscal: NotaFiscal): Observable<NotaFiscal[]>{
     return this.http
