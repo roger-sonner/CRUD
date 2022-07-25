@@ -19,7 +19,7 @@ import {NotasFiscaisComponent} from './shared/components/notas-fiscais/notas-fis
 import {ClientesService} from "./shared/services/clientes.service";
 import {ProdutosService} from "./shared/services/produtos.service";
 import {NotasFiscaisService} from "./shared/services/notas-fiscais.service";
-import {DxDataGridModule, DxFormModule, DxValidatorModule} from "devextreme-angular";
+import {DxDataGridModule, DxFormModule, DxLookupModule, DxSelectBoxModule, DxValidatorModule} from "devextreme-angular";
 import {HttpClientModule} from "@angular/common/http";
 import { ItensNotaFiscalDetalheComponent } from './shared/components/notas-fiscais/detalhe/itens-nota-fiscal-detalhe/itens-nota-fiscal-detalhe.component';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -31,23 +31,25 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     NotasFiscaisComponent,
     ItensNotaFiscalDetalheComponent
   ],
-    imports: [
-        BrowserModule,
-        SideNavOuterToolbarModule,
-        SideNavInnerToolbarModule,
-        SingleCardModule,
-        FooterModule,
-        ResetPasswordFormModule,
-        CreateAccountFormModule,
-        ChangePasswordFormModule,
-        LoginFormModule,
-        UnauthenticatedContentModule,
-        AppRoutingModule,
-        DxDataGridModule,
-        HttpClientModule,
-        DxFormModule,
-        DxValidatorModule
-    ],
+  imports: [
+    BrowserModule,
+    SideNavOuterToolbarModule,
+    SideNavInnerToolbarModule,
+    SingleCardModule,
+    FooterModule,
+    ResetPasswordFormModule,
+    CreateAccountFormModule,
+    ChangePasswordFormModule,
+    LoginFormModule,
+    UnauthenticatedContentModule,
+    AppRoutingModule,
+    DxDataGridModule,
+    HttpClientModule,
+    DxFormModule,
+    DxValidatorModule,
+    DxLookupModule,
+    DxSelectBoxModule
+  ],
   providers: [
     AuthService,
     ScreenService,

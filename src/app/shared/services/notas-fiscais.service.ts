@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import {Observable, take} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {NotaFiscal} from "../../models/nota-fiscal";
-import {ItemNotaFiscal} from "../../models/item-nota-fiscal";
+import {Produto} from "../../models/produto";
 
 const API = 'http://localhost:8080/notasFiscais';
 
-const API_ITENS = 'http://localhost:8080/itensNotaFiscal';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,25 +13,35 @@ export class NotasFiscaisService {
 
   // dropdownbox - ver se pode ser usado para produtos e clientes
   // https://github.com/DevExpress-Examples/Form---Declare-dropdownbox-in-a-form-item/tree/20.1.6%2B/Angular/src/app
-  idNotaFiscalAtual: bigint | undefined;
 
   constructor(private http: HttpClient) { }
 
+  requestNotasFiscais(metodo: string, notaFiscal?: NotaFiscal, id?: any) {
+    let result: Observable<NotaFiscal[]> | undefined;
+
+    switch (metodo) {
+      case 'GET':
+        result = this.http.get<NotaFiscal[]>(API);
+        break
+      case 'POST':
+        result = this.http.post<NotaFiscal[]>(API, notaFiscal);
+        break;
+      case 'PUT':
+        result = this.http.put<NotaFiscal[]>(`${API}/${id}`, notaFiscal);
+        break;
+      case 'DELETE':
+        result = this.http.delete<NotaFiscal[]>(`${API}/${id}`);
+        break;
+    }
+    if(result) {
+      return result.pipe(take(1));
+    }
+    return;
+  }
+  /*
   getNotasFiscais(): Observable<NotaFiscal[]> {
     return this.http
       .get<NotaFiscal[]>(API)
-      .pipe(take(1));
-  }
-
-  getItensNotaFiscalId(id: number | undefined): Observable<ItemNotaFiscal[]> {
-    return this.http
-      .get<ItemNotaFiscal[]>(`${API}/${id}`)
-      .pipe(take(1));
-  }
-
-  getItensNotasFiscais(): Observable<ItemNotaFiscal[]> {
-    return this.http
-      .get<ItemNotaFiscal[]>(API_ITENS)
       .pipe(take(1));
   }
 
@@ -53,12 +62,5 @@ export class NotasFiscaisService {
       .delete<NotaFiscal[]>(`${API}/${id}`)
       .pipe(take(1));
   }
-
-  setIdNotaFiscalAtual(id: bigint){
-    this.idNotaFiscalAtual = id;
-  }
-
-  getIdNotaFiscalAtual(){
-    return this.idNotaFiscalAtual;
-  }
+*/
 }

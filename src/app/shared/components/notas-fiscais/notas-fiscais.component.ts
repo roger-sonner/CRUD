@@ -3,6 +3,10 @@ import {NotaFiscal} from "../../../models/nota-fiscal";
 import {NotasFiscaisService} from "../../services/notas-fiscais.service";
 import {DxDataGridComponent} from "devextreme-angular";
 import DevExpress from "devextreme";
+import {Observable} from "rxjs";
+import {Produto} from "../../../models/produto";
+import {Cliente} from "../../../models/cliente";
+import {ClientesService} from "../../services/clientes.service";
 
 @Component({
   selector: 'app-notas-fiscais',
@@ -11,81 +15,77 @@ import DevExpress from "devextreme";
 })
 export class NotasFiscaisComponent implements OnInit {
 
-  // https://community.devexpress.com/blogs/aspnet/archive/2017/02/08/getting-started-with-angular-2-devextreme.aspx
-
-  // https://supportcenter.devexpress.com/ticket/details/t724854/how-to-implement-crud-in-a-master-detail-datagrid
-
-  // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/MasterDetailAPI/Angular/Light/
-
-  // https://supportcenter.devexpress.com/ticket/details/t704410/datagrid-how-to-implement-crud-operations-in-master-detail
-
-  // https://github.com/DevExpress/DevExtreme.AspNet.Data
-  // ver o tópico: Lado do cliente sem jQuery (Angular, etc.)
-
-  /*
-      https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/AdvancedMasterDetailView/Angular/Light/
-      https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/MasterDetailView/Angular/Light/
-   */
-
   @ViewChild (DxDataGridComponent , { static : false }) dataGrid : DxDataGridComponent | undefined
 
   notasFiscais: NotaFiscal[] = [];
+  clientes: Cliente[] = [];
 
   captionDetalhe: string = 'Cabeçalho do detalhe';
 
 
-  constructor(private notasFiscaisService: NotasFiscaisService) { }
+
+  constructor(
+    private notasFiscaisService: NotasFiscaisService,
+    private clienteService: ClientesService) { }
 
   ngOnInit(): void {
-    this.notasFiscaisService.getNotasFiscais().subscribe({
-      next: value => {
-        this.notasFiscais = value
-        //console.log(value);
-      },
-      error: err => console.log(err),
-      complete: () => console.log
-    })
+
+    this.notasFiscaisService.requestNotasFiscais('GET')?.subscribe({
+      next: value => this.notasFiscais = value})
 
 
+    // https://js.devexpress.com/Demos/Widgetsgallery/Demo/Lookup/Basics/Angular/Light/
+    // Usado no Lookup
+    this.clienteService.requestCliente('GET')?.subscribe({
+      next: value => {this.clientes = value; console.log(this.clientes)}})
   }
 
   onSaved($event: any) {
+    let result: Observable<NotaFiscal[]> | undefined;
 
     if($event.changes.length !== 0) {
+
+      let data = $event.changes[0].data;
+      let idNotaFiscal = $event.changes[0].key
 
       switch ($event.changes[0].type) {
 
         case 'insert':
-          this.notasFiscaisService.postNotaFiscal($event.changes[0].data)
-            .subscribe({
-              next: () => console.log,
-              error: err => console.log('ERRO: ', err),
-              complete: () => console.log
-            });
+
+          console.log(data);
+
+          result = this.notasFiscaisService.requestNotasFiscais('POST', data);
           break;
 
         case 'update':
-          this.notasFiscaisService.putNotaFiscal($event.changes[0].data, $event.changes[0].data.id)
-            .subscribe({
-              next: () => console.log,
-              error: err => console.log(err),
-              complete: () => console.log
-            });
+          result = this.notasFiscaisService.requestNotasFiscais('PUT', data, data.id);
           break;
 
         case 'remove':
-          this.notasFiscaisService.deleteNotaFiscal($event.changes[0].key)
-            .subscribe({
-              next: () => console.log,
-              error: err => console.log(err),
-              complete: () => console.log
-            });
+          result = this.notasFiscaisService.requestNotasFiscais('DELETE', idNotaFiscal);
           break
 
       }
-      this.dataGrid?.instance.refresh();
+      if(result) {
+        result?.subscribe({
+          next: () => console.log,
+          error: err => console.log(err),
+          complete: () => console.log
+        })
+        this.dataGrid?.instance.refresh();
+      }
     }
   }
+
+  getClienteNome(item: any) {
+    if (!item) {
+      return '';
+    }
+
+    return `${item.id} ${item.nome}`;
+  }
+
+
 }
 
 /*

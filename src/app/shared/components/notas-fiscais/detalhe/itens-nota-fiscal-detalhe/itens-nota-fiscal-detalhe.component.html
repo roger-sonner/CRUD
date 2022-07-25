@@ -1,34 +1,23 @@
 <dx-data-grid
   id="gridDetailContainer"
   [dataSource]="itensNotaFiscal"
-
+  alignment="center"
   noDataText="Sem dados para exibição."
   [showColumnLines]="true"
   [showRowLines]="true"
   [showBorders]="true"
   [rowAlternationEnabled]="true"
 >
-  <dxo-paging [enabled]="true"></dxo-paging>
-  <dxi-column alignment="center" dataField="sequencial" caption="Ordem"></dxi-column>
-  <dxi-column alignment="center" dataField="produto.codigo" caption="Código"></dxi-column>
-  <dxi-column dataField="produto.descricao" caption="Descrição do produto"></dxi-column>
-  <dxi-column format="##,##0.00" dataField="quantidade" caption="Qtde." ></dxi-column>
-  <dxi-column format="R$ #,###,##0.00" dataField="produto.valorUnitario" caption="Valor Unit." ></dxi-column>
-  <dxi-column format="R$ #,###,##0.00" dataField="valorTotal" caption="Valor Total" ></dxi-column>
+  <dxo-filter-row
+    [visible]="true"
+  ></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+  <dxo-search-panel
+    [visible]="true"
+    [width]="240"
+    placeholder=""
+  ></dxo-search-panel>
 
-
-</dx-data-grid>
-
-<!--
-<dx-data-grid
-  noDataText="Sem dados para exibição."
-  [dataSource]="itensNotaFiscal"
-  [columnAutoWidth]="true"
-  [showColumnLines]="true"
-  [showRowLines]="true"
-  [showBorders]="true"
-  [rowAlternationEnabled]="true"
->
   <dxo-paging [enabled]="true"></dxo-paging>
 
   <dxo-editing
@@ -40,6 +29,7 @@
     [confirmDelete]="true"
     [useIcons]="true"
   >
+
     <dxo-popup
       title="Itens da Nota Fiscal"
       [showTitle]="true"
@@ -47,21 +37,77 @@
       [height]="525"
     >
     </dxo-popup>
+
     <dxo-form>
       <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
-        <dxi-item dataField="sequencial" [editorOptions]="{ width: 20 }"></dxi-item>
-        <dxi-item dataField="produto.descricao" [editorOptions]="{ width: 600 }"></dxi-item>
-        <dxi-item dataField="quantidade" [editorOptions]="{ width: 100 }"></dxi-item>
-        <dxi-item dataField="valorTotal" [editorOptions]="{ width: 100 }"></dxi-item>
+        <dxi-item caption="" dataField="sequencial" [editorOptions]="{ width: 50 }"></dxi-item>
+        <dxi-item dataField="produto.codigo" [editorOptions]="{ width: 60 }"></dxi-item>
+        <dxi-item dataField="quantidade" [editorOptions]="{ width: 70 }"></dxi-item>
+
       </dxi-item>
     </dxo-form>
+
+
   </dxo-editing>
+  <dxi-column
+    [width]="50"
+    alignment="center"
+    dataType="integer"
+    dataField="sequencial"
+    caption="">
 
+  </dxi-column>
+  <dxi-column
+    [width]="60"
+    alignment="center"
+    dataType="integer"
+    dataField="produto.codigo"
+    caption="Cód">
 
-  <dxi-column dataField="sequencial" dataType="number" caption="Seq." width="70"></dxi-column>
-  <dxi-column dataField="produto.descricao" dataType="string" caption="Descrição" width="600"></dxi-column>
-  <dxi-column dataField="quantidade" dataType="number" caption="Qtde" width="100"></dxi-column>
-  <dxi-column dataField="valorTotal" dataType="number" caption="Vr Total" width="200"></dxi-column>
+  </dxi-column>
+  <dxi-column
+    [width]="200"
+    alignment="left"
+    dataType="string"
+    dataField="produto.descricao"
+    caption="Descrição do produto">
+
+  </dxi-column>
+  <dxi-column
+    [width]="150"
+    alignment="right"
+    dataType="currency"
+    format="R$ #,###,##0.00"
+    dataField="produto.valorUnitario"
+    caption="Valor unit. atual">
+
+  </dxi-column>
+  <dxi-column
+    [width]="70"
+    alignment="right"
+    dataType="float"
+    format="##,##0.00"
+    dataField="quantidade"
+    caption="Qtde.">
+
+  </dxi-column>
+  <dxi-column
+    [width]="150"
+    [calculateCellValue]="getValorUnitarioVenda"
+    alignment="right"
+    format="R$ #,###,##0.00"
+    dataType="currency"
+    caption="Valor unit. venda"
+  >
+
+  </dxi-column>
+  <dxi-column
+    [width]="150"
+    alignment="right"
+    dataType="currency"
+    format="R$ #,###,##0.00"
+    dataField="valorTotal"
+    caption="Valor total"></dxi-column>
+
 
 </dx-data-grid>
--->

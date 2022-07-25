@@ -1,8 +1,6 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import DataSource from "devextreme/data/data_source";
-import {ItemNotaFiscal, ItemNotaFiscal1} from "../../../../../models/item-nota-fiscal";
-import ArrayStore from "devextreme/data/array_store";
-import {NotasFiscaisService} from "../../../../services/notas-fiscais.service";
+import {AfterViewInit, Component, Input} from '@angular/core';
+import {ItemNotaFiscal} from "../../../../../models/item-nota-fiscal";
+import {ItensNotaFiscalService} from "../../../../services/itens-nota-fiscal.service";
 
 @Component({
   selector: 'itens-nota-fiscal-detalhe',
@@ -15,30 +13,26 @@ export class ItensNotaFiscalDetalheComponent implements AfterViewInit {
 
   itensNotaFiscal: ItemNotaFiscal[] = [];
 
-  constructor(private notasFiscaisService: NotasFiscaisService) {
+  constructor(private itensNotaFiscalService: ItensNotaFiscalService) {
   }
 
   ngAfterViewInit() {
-    // console.log('@Input() key', this.key);
-    // this.notasFiscaisService.getItensNotasFiscais().subscribe({
-    // this.notasFiscaisService.getItensNotaFiscalId(this.key).subscribe({
-    this.notasFiscaisService.getItensNotasFiscais().subscribe({
+
+    this.itensNotaFiscalService.getItensNotaFiscalId(this.key).subscribe({
       next: value => {
         this.itensNotaFiscal = value;
+        //console.log(this.itensNotaFiscal)
       },
       error: err => console.log(err),
       complete: () => console.log
     });
-
-    // this.notasFiscaisService.getItensNotaFiscalId(this.key).subscribe({
-    //   next: value => {
-    //     this.itensNotaFiscal = value
-    //   },
-    //   error: err => console.log(err),
-    //   complete: () => console.log
-    // });
-
-
   }
 
+  completedValue(rowData: { Status: string; }) {
+    return rowData.Status = this.itensNotaFiscal.toString();
+  }
+
+  getValorUnitarioVenda(rowData: any) {
+    return rowData.valorTotal / rowData.quantidade;
+  }
 }
